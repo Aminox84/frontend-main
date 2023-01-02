@@ -2,11 +2,30 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
 
+interface iResponse{
+  "id": string,
+  "username": string,
+  "createdAt": string,
+  "authStrategy": null,
+  "profile": {
+      "id": number,
+      "firstname": string,
+      "lastname": string,
+      "age": number,
+      "dob": string,
+      "interest": string,
+      "phoneNumber": string,
+      "email": string,
+      "zipCode": string,
+      "state": string
+  }
+}
 
 
 
 const UserForm = () => {
-
+   
+  
 
   const [addFormData, setAddFormData] = useState({
     "username": '',
