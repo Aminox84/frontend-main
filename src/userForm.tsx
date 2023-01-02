@@ -24,8 +24,15 @@ interface iResponse{
 
 
 const UserForm = () => {
-   
-  
+
+  const view= async ()=>{
+    const response = await fetch("http://localhost:3000/users")
+    const data = await response.json()
+    setData(data)
+    }
+
+const [data,setData]=useState<iResponse[]>([]);
+
 
   const [addFormData, setAddFormData] = useState({
     "username": '',
@@ -46,6 +53,11 @@ const UserForm = () => {
     setVisible4(false)
     setVisible1(true)
   }
+
+  const deleteItem =(e)=>{
+    axios.delete(`http://localhost:3000/users/${e}`)
+   
+   }
 
   const handleFormChange = (event) => {
 
@@ -103,7 +115,7 @@ const UserForm = () => {
 
     setVisible3(false)
     setVisible4(true)
-
+    view()
   }
 
   const handleSubmitButton = async (event) => {
@@ -325,7 +337,7 @@ const UserForm = () => {
                   type="button"
                   className="btn btn-primary ml-2"
                 >
-                  Afficher la base de données - TBU - Actuellement que en postman monsieur
+                  Afficher la base de données
                 </button>
               </div>
               <button type="button"
@@ -358,19 +370,22 @@ const UserForm = () => {
                 </thead>
                 <tbody>
 
-                  <tr>
-                    <td>B</td>
-                    <td>B</td>
-                    <td>B</td>
-                    <td>B</td>
-                    <td>B</td>
-                    <td>B</td>
-                    <td>B</td>
-                    <td>B</td>
-                    <td>B</td>
-                    <td>B</td>
-                  </tr>
-
+                {data.map(element=>{
+            return (
+  <tr>
+  <td>{element.username}</td>
+  <td>{element.profile.firstname}</td>
+  <td>{element.profile.lastname}</td>
+  <td>{element.profile.age}</td>
+  <td>{element.profile.dob}</td>
+  <td>{element.profile.interest}</td>
+  <td>{element.profile.phoneNumber}</td>
+  <td>{element.profile.email}</td>
+  <td>{element.profile.zipCode}</td>
+  <td>{element.profile.state}</td>
+  <td><button className='btn btn-primary' onClick={()=>deleteItem(parseInt(element.id))}>Delete</button></td>
+  </tr>)
+})}
                 </tbody>
               </table>
               <button type="button"
